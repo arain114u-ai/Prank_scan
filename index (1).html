@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>System Scan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#020617;
+  font-family:Arial, sans-serif;
+  color:white;
+  text-align:center;
+}
+
+.box{
+  background:#0b1220;
+  padding:30px;
+  border-radius:15px;
+  width:90%;
+  max-width:360px;
+  box-shadow:0 0 30px rgba(0,0,0,0.7);
+}
+
+button{
+  margin-top:20px;
+  padding:14px;
+  width:100%;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.bar{
+  margin-top:20px;
+  height:12px;
+  background:#020617;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:#38bdf8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="step1">
+  <h2>Security Verification</h2>
+  <p>Please confirm to continue.</p>
+  <button onclick="start()">Continue</button>
+</div>
+
+<div class="box" id="step2" style="display:none">
+  <h2>Scanning system…</h2>
+  <p id="msg">Initializing…</p>
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
+</div>
+
+<script>
+function start(){
+  if(document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+
+  document.getElementById("step1").style.display="none";
+  document.getElementById("step2").style.display="block";
+
+  let fill = document.getElementById("fill");
+  let msg  = document.getElementById("msg");
+  let p = 0;
+
+  let scan = setInterval(()=>{
+    p += 5;
+    fill.style.width = p + "%";
+    msg.innerText = "Scanning files...";
+
+    if(p >= 100){
+      clearInterval(scan);
+      boom();
+    }
+  }, 120);
+}
+
+function boom(){
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200,100,300]);
+  }
+
+  // DIRECT IMAGE LINK
+  window.location.href =
+  "https://drive.google.com/uc?export=view&id=1QbbMlMhg-ntuf10QIrNqUrCF2pmO7PAz";
+}
+</script>
+
+</body>
+</html>
