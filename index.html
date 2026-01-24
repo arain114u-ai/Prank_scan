@@ -1,111 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>System Scan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
+
 <style>
 body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#020617;
-  font-family:Arial, sans-serif;
-  color:white;
-  text-align:center;
+margin:0;
+background:black;
+color:white;
+font-family:Arial;
 }
 
-.box{
-  background:#0b1220;
-  padding:30px;
-  border-radius:15px;
-  width:90%;
-  max-width:360px;
-  box-shadow:0 0 30px rgba(0,0,0,0.7);
+#loader{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
 }
 
-button{
-  margin-top:20px;
-  padding:14px;
-  width:100%;
-  font-size:18px;
-  border:none;
-  border-radius:10px;
-  background:#22c55e;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
+#bar{
+width:80%;
+height:12px;
+background:#222;
+border-radius:20px;
+overflow:hidden;
+margin-top:20px;
 }
 
-.bar{
-  margin-top:20px;
-  height:12px;
-  background:#020617;
-  border-radius:10px;
-  overflow:hidden;
+#fill{
+height:100%;
+width:0%;
+background:#00ff6a;
 }
 
-.fill{
-  height:100%;
-  width:0%;
-  background:#38bdf8;
+#gorzilla{
+display:none;
+height:100vh;
+width:100vw;
+background:black;
+}
+
+#gorzilla img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.footer{
+position:fixed;
+bottom:10px;
+width:100%;
+text-align:center;
+font-size:14px;
+color:white;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box" id="step1">
-  <h2>Security Verification</h2>
-  <p>Please confirm to continue.</p>
-  <button onclick="start()">Continue</button>
+<div id="loader">
+<h2>Scanning System...</h2>
+<div id="bar"><div id="fill"></div></div>
 </div>
 
-<div class="box" id="step2" style="display:none">
-  <h2>Scanning system…</h2>
-  <p id="msg">Initializing…</p>
-  <div class="bar">
-    <div class="fill" id="fill"></div>
-  </div>
+<div id="gorzilla">
+<img src="gorilla.jpg">
+<div class="footer">Created by Ahmed Ali Asif</div>
 </div>
 
 <script>
-function start(){
-  if(document.documentElement.requestFullscreen){
-    document.documentElement.requestFullscreen();
-  }
-
-  document.getElementById("step1").style.display="none";
-  document.getElementById("step2").style.display="block";
-
-  let fill = document.getElementById("fill");
-  let msg  = document.getElementById("msg");
-  let p = 0;
-
-  let scan = setInterval(()=>{
-    p += 5;
-    fill.style.width = p + "%";
-    msg.innerText = "Scanning files...";
-
-    if(p >= 100){
-      clearInterval(scan);
-      boom();
-    }
-  }, 120);
+let p=0;
+let i=setInterval(()=>{
+p+=4;
+document.getElementById("fill").style.width=p+"%";
+if(p>=100){
+clearInterval(i);
+document.getElementById("loader").style.display="none";
+document.getElementById("gorzilla").style.display="block";
 }
-
-function boom(){
-  if(navigator.vibrate){
-    navigator.vibrate([200,100,200,100,300]);
-  }
-
-  // DIRECT IMAGE LINK
-  window.location.href =
-  "https://drive.google.com/uc?export=view&id=1QbbMlMhg-ntuf10QIrNqUrCF2pmO7PAz";
-}
+},80);
 </script>
 
 </body>
