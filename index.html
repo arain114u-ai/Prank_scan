@@ -7,13 +7,21 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
 background:black;
 color:white;
 font-family:Arial;
+height:100vh;
+overflow:hidden;
 }
 
+/* Loader Screen */
 #loader{
 height:100vh;
 display:flex;
@@ -24,7 +32,8 @@ flex-direction:column;
 
 #bar{
 width:80%;
-height:12px;
+max-width:400px;
+height:15px;
 background:#222;
 border-radius:20px;
 overflow:hidden;
@@ -34,29 +43,36 @@ margin-top:20px;
 #fill{
 height:100%;
 width:0%;
-background:#00ff6a;
+background:lime;
+transition:width 0.1s;
 }
 
-#gorzilla{
+/* Gorilla Screen */
+#gorilla{
 display:none;
-height:100vh;
-width:100vw;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:black;
 }
 
-#gorzilla img{
+#gorilla img{
 width:100%;
 height:100%;
-object-fit:cover;
+object-fit:cover;   /* Important for all screens */
 }
 
 .footer{
-position:fixed;
-bottom:10px;
+position:absolute;
+bottom:15px;
 width:100%;
 text-align:center;
 font-size:14px;
 color:white;
+background:rgba(0,0,0,0.5);
+padding:5px;
 }
 </style>
 </head>
@@ -65,25 +81,36 @@ color:white;
 
 <div id="loader">
 <h2>Scanning System...</h2>
-<div id="bar"><div id="fill"></div></div>
+<div id="bar">
+<div id="fill"></div>
+</div>
 </div>
 
-<div id="gorzilla">
+<div id="gorilla">
 <img src="gorilla.jpg.png">
 <div class="footer">Created by Ahmed Ali Asif</div>
+<audio id="funny" src="https://www.myinstants.com/media/sounds/trollolol.mp3"></audio>
 </div>
 
 <script>
 let p=0;
-let i=setInterval(()=>{
-p+=4;
+
+let i=setInterval(function(){
+p+=2;
 document.getElementById("fill").style.width=p+"%";
+
 if(p>=100){
 clearInterval(i);
 document.getElementById("loader").style.display="none";
-document.getElementById("gorzilla").style.display="block";
+document.getElementById("gorilla").style.display="block";
+
+document.getElementById("funny").play();
+
+if(navigator.vibrate){
+navigator.vibrate([200,100,200]);
 }
-},80);
+}
+},60);
 </script>
 
 </body>
