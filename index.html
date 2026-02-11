@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>System Scan</title>
+<title>Warning</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
 
@@ -15,10 +15,10 @@ box-sizing:border-box;
 
 body{
 background:black;
-color:white;
 font-family:Arial, sans-serif;
 height:100vh;
 overflow:hidden;
+color:white;
 }
 
 /* Loading Screen */
@@ -30,7 +30,7 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#000000,#111111,#000000);
+background:black;
 text-align:center;
 }
 
@@ -38,26 +38,23 @@ text-align:center;
 color:red;
 margin-bottom:25px;
 font-size:26px;
-animation:blink 1s infinite alternate;
 }
 
-@keyframes blink{
-from{opacity:0.4;}
-to{opacity:1;}
+#startBtn{
+padding:15px 30px;
+font-size:18px;
+background:red;
+color:white;
+border:none;
+border-radius:30px;
+cursor:pointer;
+animation:pulse 1s infinite;
 }
 
-.spinner{
-border:6px solid #222;
-border-top:6px solid red;
-border-radius:50%;
-width:70px;
-height:70px;
-animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
 }
 
 /* Prank Screen */
@@ -83,22 +80,21 @@ bottom:15px;
 width:100%;
 text-align:center;
 font-size:14px;
-color:white;
 background:rgba(0,0,0,0.6);
 padding:6px;
 }
 
-/* Emoji effect */
+/* Emoji Effect */
 .emoji{
 position:absolute;
-font-size:30px;
+font-size:32px;
 animation:floatUp 1s ease-out forwards;
 pointer-events:none;
 }
 
 @keyframes floatUp{
 0%{transform:translateY(0) scale(1); opacity:1;}
-100%{transform:translateY(-80px) scale(1.5); opacity:0;}
+100%{transform:translateY(-100px) scale(1.6); opacity:0;}
 }
 </style>
 </head>
@@ -106,33 +102,40 @@ pointer-events:none;
 <body>
 
 <div id="loading">
-<h1>⚠ WARNING ⚠<br>Scanning Your Device...</h1>
-<div class="spinner"></div>
+<h1>⚠ Sensitive Content ⚠<br>Tap Below To Continue</h1>
+<button id="startBtn">🔥 Click To Reveal 🔥</button>
 </div>
 
 <div id="prank">
 <img src="gorilla.jpg.png">
 <div class="footer">Created by Ahmed Ali Asif</div>
-<audio id="sound" src="https://www.myinstants.com/media/sounds/trollolol.mp3"></audio>
+<audio id="sound" loop>
+<source src="https://www.myinstants.com/media/sounds/trollolol.mp3" type="audio/mpeg">
+</audio>
 </div>
 
 <script>
-setTimeout(function(){
+
+let button = document.getElementById("startBtn");
+let sound = document.getElementById("sound");
+
+button.onclick = function(){
 document.getElementById("loading").style.display="none";
 document.getElementById("prank").style.display="block";
 
-let sound = document.getElementById("sound");
-sound.volume = 1.0;  // Full volume
+sound.volume = 1.0;
 sound.play();
 
 if(navigator.vibrate){
 navigator.vibrate([300,100,300,100,500]);
 }
+};
 
-},3000);
-
-/* Tap Emoji Effect */
+// Emoji effect on tap
 document.addEventListener("click", function(e){
+
+if(document.getElementById("prank").style.display === "block"){
+
 let emoji = document.createElement("div");
 emoji.className = "emoji";
 emoji.innerHTML = "🖕";
@@ -143,7 +146,11 @@ document.body.appendChild(emoji);
 setTimeout(()=>{
 emoji.remove();
 },1000);
+
+}
+
 });
+
 </script>
 
 </body>
