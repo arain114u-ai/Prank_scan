@@ -7,12 +7,7 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
 background:black;
 font-family:Arial, sans-serif;
@@ -21,7 +16,7 @@ overflow:hidden;
 color:white;
 }
 
-/* Loading Screen */
+/* Loading */
 #loading{
 position:fixed;
 width:100%;
@@ -57,7 +52,7 @@ animation:pulse 1s infinite;
 100%{transform:scale(1);}
 }
 
-/* Prank Screen */
+/* Prank */
 #prank{
 display:none;
 position:fixed;
@@ -65,6 +60,7 @@ width:100%;
 height:100%;
 background:black;
 overflow:hidden;
+text-align:center;
 }
 
 #prank img{
@@ -84,7 +80,58 @@ background:rgba(0,0,0,0.6);
 padding:6px;
 }
 
-/* Emoji Effect */
+/* Buttons */
+.actionBtn{
+position:absolute;
+padding:10px 20px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+font-size:14px;
+}
+
+#apologyBtn{
+top:20px;
+right:20px;
+background:#ff69b4;
+color:white;
+}
+
+#instaBtn{
+top:20px;
+left:20px;
+background:#E1306C;
+color:white;
+}
+
+/* Apology Page */
+#apologyPage{
+display:none;
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+overflow:auto;
+padding:30px;
+text-align:center;
+}
+
+#apologyPage h1{
+color:#ff69b4;
+margin-bottom:20px;
+}
+
+.backBtn{
+margin-top:20px;
+padding:10px 20px;
+background:red;
+border:none;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+/* Emoji */
 .emoji{
 position:absolute;
 font-size:32px;
@@ -107,11 +154,38 @@ pointer-events:none;
 </div>
 
 <div id="prank">
+<button id="instaBtn" class="actionBtn" onclick="openInsta()">📸 Instagram</button>
+<button id="apologyBtn" class="actionBtn" onclick="openApology()">💖 Apologize</button>
+
 <img src="gorilla.jpg.png">
-<div class="footer">Created by Ahmed Ali Asif</div>
+
+<div class="footer">Created by Ahmed Ali Asif | @amd_arain</div>
+
 <audio id="sound" loop>
 <source src="https://www.myinstants.com/media/sounds/trollolol.mp3" type="audio/mpeg">
 </audio>
+</div>
+
+<div id="apologyPage">
+<h1>Apologize 💖</h1>
+
+<p>
+This is only for fun.<br><br>
+
+English: This website is made only for entertainment.<br><br>
+
+Urdu: یہ ویب سائٹ صرف مزاح کے لئے بنائی گئی ہے۔<br><br>
+
+Hindi: यह वेबसाइट सिर्फ मनोरंजन के लिए बनाई गई है।<br><br>
+
+Malayalam: ഈ വെബ്സൈറ്റ് വിനോദത്തിനായി മാത്രമാണ് നിർമ്മിച്ചിരിക്കുന്നത്.<br><br>
+
+If you feel hurt, you can report or contact us.<br><br>
+
+Follow for more fun 👉 @amd_arain
+</p>
+
+<button class="backBtn" onclick="goBack()">🔙 Go Back</button>
 </div>
 
 <script>
@@ -131,33 +205,45 @@ navigator.vibrate([300,100,300,100,500]);
 }
 };
 
-// Emoji effect on tap
+// Emoji tap
 document.addEventListener("click", function(e){
-
 if(document.getElementById("prank").style.display === "block"){
-
 let emoji = document.createElement("div");
 emoji.className = "emoji";
 emoji.innerHTML = "🖕";
 emoji.style.left = e.clientX + "px";
 emoji.style.top = e.clientY + "px";
 document.body.appendChild(emoji);
-
-setTimeout(()=>{
-emoji.remove();
-},1000);
-
+setTimeout(()=>{emoji.remove();},1000);
 }
-
 });
 
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js');
-  });
+// Apology
+function openApology(){
+document.getElementById("prank").style.display="none";
+document.getElementById("apologyPage").style.display="block";
+sound.pause();
 }
+
+function goBack(){
+document.getElementById("apologyPage").style.display="none";
+document.getElementById("prank").style.display="block";
+sound.play();
+}
+
+// Instagram
+function openInsta(){
+window.open("https://instagram.com/amd_arain","_blank");
+}
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('sw.js');
+});
+}
+
 </script>
+
 </body>
 </html>
