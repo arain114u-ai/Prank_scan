@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>System Scan</title>
+<title>Warning</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
 
@@ -21,47 +21,54 @@ height:100vh;
 overflow:hidden;
 }
 
-/* Loader Screen */
-#loader{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-}
-
-#bar{
-width:80%;
-max-width:400px;
-height:15px;
-background:#222;
-border-radius:20px;
-overflow:hidden;
-margin-top:20px;
-}
-
-#fill{
+/* Loading Screen */
+#loading{
+position:fixed;
+width:100%;
 height:100%;
-width:0%;
-background:lime;
-transition:width 0.1s;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:black;
+text-align:center;
+padding:20px;
 }
 
-/* Gorilla Screen */
-#gorilla{
+#loading h1{
+color:red;
+margin-bottom:20px;
+font-size:24px;
+}
+
+.spinner{
+border:5px solid #222;
+border-top:5px solid red;
+border-radius:50%;
+width:60px;
+height:60px;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* Prank Image */
+#prank{
 display:none;
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:black;
 }
 
-#gorilla img{
+#prank img{
 width:100%;
 height:100%;
-object-fit:cover;   /* Important for all screens */
+object-fit:contain; /* full image visible */
+background:black;
 }
 
 .footer{
@@ -79,38 +86,29 @@ padding:5px;
 
 <body>
 
-<div id="loader">
-<h2>Scanning System...</h2>
-<div id="bar">
-<div id="fill"></div>
-</div>
+<div id="loading">
+<h1>⚠ WARNING ⚠<br>Your Device Is Being Checked...</h1>
+<div class="spinner"></div>
 </div>
 
-<div id="gorilla">
+<div id="prank">
 <img src="gorilla.jpg.png">
 <div class="footer">Created by Ahmed Ali Asif</div>
-<audio id="funny" src="https://www.myinstants.com/media/sounds/trollolol.mp3"></audio>
+<audio id="sound" src="https://www.myinstants.com/media/sounds/trollolol.mp3"></audio>
 </div>
 
 <script>
-let p=0;
+setTimeout(function(){
+document.getElementById("loading").style.display="none";
+document.getElementById("prank").style.display="block";
 
-let i=setInterval(function(){
-p+=2;
-document.getElementById("fill").style.width=p+"%";
-
-if(p>=100){
-clearInterval(i);
-document.getElementById("loader").style.display="none";
-document.getElementById("gorilla").style.display="block";
-
-document.getElementById("funny").play();
+document.getElementById("sound").play();
 
 if(navigator.vibrate){
-navigator.vibrate([200,100,200]);
+navigator.vibrate([300,100,300]);
 }
-}
-},60);
+
+},3000);
 </script>
 
 </body>
