@@ -1,7 +1,7 @@
 {
   "name": "System Scan",
   "short_name": "Scan",
-  "start_url": "/Pran_2_image/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
